@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { db } from "@/Firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import useEditBlog from "@/src/app/hook/useEditBlog";
 import { Blog } from "@/src/app/hook/useBlogData";
 
 interface EditBlogFormProps {
@@ -17,26 +13,8 @@ export const EditBlogForm = ({ blog, setIsEditing }: EditBlogFormProps) => {
   const [title, setTitle] = useState(blog.title);
   const [subtitle, setSubTitle] = useState(blog.subtitle);
   const [content, setContent] = useState(blog.content);
-  const router = useRouter();
 
-  const mutation = useMutation<void, Error, Blog>({
-    mutationFn: async (updatedBlog: Blog) => {
-      const blogRef = doc(db, "blogs", updatedBlog.id!);
-      await updateDoc(blogRef, {
-        title: updatedBlog.title,
-        subtitle: updatedBlog.subtitle,
-        content: updatedBlog.content,
-      });
-    },
-    onSuccess: () => {
-      toast.success("Blog has been updated");
-      setIsEditing(false);
-      router.push(`/blog/${blog.id}`);
-    },
-    onError: () => {
-      toast.error("Error updating blog");
-    },
-  });
+  const mutation = useEditBlog({ setIsEditing });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

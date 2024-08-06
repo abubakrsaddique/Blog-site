@@ -5,10 +5,8 @@ const MyProfile = () => {
   return (
     <section className="w-full mx-auto">
       <Image
-        className=" border-3 border-black height-[200px] rounded-[50%] mx-auto mt-8"
+        className=" border-3 border-black  rounded-[100%] mx-auto mt-8 h-[200px] w-[200px]"
         src={ProfileImage}
-        width={200}
-        height={200}
         alt={""}
       />
     </section>
