@@ -1,33 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-
-import { db } from "@/Firebase";
-import { collection, getDocs } from "firebase/firestore";
-
-interface Blog {
-  id: string;
-  title: string;
-  subtitle: string;
-  content: string;
-}
+import { useBlogData } from "@/src/app/hook/useBlogData";
 
 const BlogPage = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const { blogs, loading } = useBlogData();
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      const querySnapshot = await getDocs(collection(db, "blogs"));
-      const blogsData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Blog[];
-      setBlogs(blogsData);
-    };
-
-    fetchBlogs();
-  }, []);
+  if (loading) {
+    return (
+      <div className="p-4 text-white flex justify-center items-center">
+        Loading.....
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
