@@ -1,15 +1,25 @@
 "use client";
 
 import Link from "next/link";
+
 import { useBlogData } from "@/src/app/hook/useBlogData";
+import { Blog } from "@/src/app/hook/useBlogData";
 
 const BlogPage = () => {
-  const { blogs, loading } = useBlogData();
+  const { data: blogs, isLoading, isError } = useBlogData();
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="p-4 text-white flex justify-center items-center">
         Loading.....
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-4 text-red-500 flex justify-center items-center">
+        An error occurred!
       </div>
     );
   }
@@ -22,7 +32,7 @@ const BlogPage = () => {
         </button>
       </Link>
       <div className="flex flex-row flex-wrap gap-6 w-full">
-        {blogs.map((blog) => (
+        {(blogs as Blog[]).map((blog) => (
           <Link key={blog.id} href={`/blog/${blog.id}`} className="py-3">
             <div className="p-4 border text-white rounded shadow hover:bg-gray-100 hover:text-black">
               <h2 className="text-xl font-bold">{blog.title}</h2>

@@ -1,33 +1,38 @@
 "use client";
 
 import { useBlogData } from "@/src/app/hook/useBlogData";
+import { Blog } from "@/src/app/hook/useBlogData";
 
 const BlogDetailPage = ({ params }: { params: { id: string } }) => {
-  const { blog, loading } = useBlogData(params.id);
-
-  if (loading) {
-    return (
-      <div className="p-4 text-white flex justify-center items-center">
-        Loading.....
-      </div>
-    );
-  }
+  const { data: blog } = useBlogData(params.id);
 
   if (!blog) {
     return (
       <div className="p-4 text-white flex justify-center items-center">
-        No such document!
+        Loading...
       </div>
     );
   }
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-2 text-white">{blog.title}</h1>
-      <h2 className="text-base font-semibold mb-4 text-white">
-        {blog.subtitle}
-      </h2>
-      <p className="text-white">{blog.content}</p>
+      <div className="flex gap-4">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+          Update
+        </button>
+        <button className="bg-red-500 text-white px-4 py-2 rounded">
+          Delete
+        </button>
+      </div>
+      <div className="p-4">
+        <h1 className="text-xl font-bold mb-2 text-white">
+          {(blog as Blog).title}
+        </h1>
+        <h2 className="text-base font-semibold mb-4 text-white">
+          {(blog as Blog).subtitle}
+        </h2>
+        <p className="text-white">{(blog as Blog).content}</p>
+      </div>
     </div>
   );
 };
