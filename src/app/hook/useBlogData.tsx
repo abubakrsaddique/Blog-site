@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { collection, onSnapshot, doc, DocumentData } from "firebase/firestore";
 import { db } from "../../../Firebase";
 
 export interface Blog {
@@ -9,27 +9,64 @@ export interface Blog {
   content: string;
 }
 
-const fetchBlogs = async (): Promise<Blog[]> => {
-  const querySnapshot = await getDocs(collection(db, "blogs"));
-  return querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as Blog[];
+const useBlogs = () => {
+  const queryClient = useQueryClient();
+
+  return useQuery<Blog[], Error>({
+    queryKey: ["blogs"],
+    queryFn: () =>
+      new Promise<Blog[]>((resolve, reject) => {
+        const unsubscribe = onSnapshot(
+          collection(db, "blogs"),
+          (querySnapshot) => {
+            const blogs = querySnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            })) as Blog[];
+            resolve(blogs);
+
+            queryClient.setQueryData(["blogs"], blogs);
+          },
+          (error) => reject(error)
+        );
+
+        return () => unsubscribe();
+      }),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
 };
 
-const fetchBlog = async (id: string): Promise<Blog | null> => {
-  const docRef = doc(db, "blogs", id);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() } as Blog;
-  }
-  return null;
+const useBlog = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useQuery<Blog | null, Error>({
+    queryKey: ["blog", id],
+    queryFn: () =>
+      new Promise<Blog | null>((resolve, reject) => {
+        const docRef = doc(db, "blogs", id);
+        const unsubscribe = onSnapshot(
+          docRef,
+          (docSnap) => {
+            if (docSnap.exists()) {
+              const blog = { id: docSnap.id, ...docSnap.data() } as Blog;
+              resolve(blog);
+              queryClient.setQueryData(["blog", id], blog);
+            } else {
+              resolve(null);
+            }
+          },
+          (error) => reject(error)
+        );
+
+        return () => unsubscribe();
+      }),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+    enabled: !!id,
+  });
 };
 
 export const useBlogData = (id?: string) => {
-  return useQuery<Blog[] | Blog | null, Error>({
-    queryKey: id ? ["blog", id] : ["blogs"],
-    queryFn: id ? () => fetchBlog(id) : fetchBlogs,
-    enabled: id ? !!id : true,
-  });
+  return id ? useBlog(id) : useBlogs();
 };
