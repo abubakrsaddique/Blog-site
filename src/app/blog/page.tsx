@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 
-import { useBlogData } from "@/src/app/hook/useBlogData";
+import { useBlogs } from "@/src/app/hook/useBlogData";
 import { Blog } from "@/src/app/hook/useBlogData";
 
 const BlogPage = () => {
-  const { data: blogs, isLoading, isError } = useBlogData();
+  const { data: blogs, isLoading, isError } = useBlogs();
 
   if (isLoading) {
     return (

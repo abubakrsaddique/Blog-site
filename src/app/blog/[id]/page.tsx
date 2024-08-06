@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBlogData } from "@/src/app/hook/useBlogData";
+import { useBlogs } from "@/src/app/hook/useBlogData";
 import { Blog } from "@/src/app/hook/useBlogData";
 import { EditBlogForm } from "@/src/app/components/EditBlogForm";
 import DeleteBlog from "@/src/app/components/DeleteBlog";
@@ -10,7 +10,7 @@ import { useModal } from "@/src/app/modal/useModal";
 import useDeleteBlog from "@/src/app/hook/useDeleteBlog";
 
 const BlogDetailPage = ({ params }: { params: { id: string } }) => {
-  const { data: blog } = useBlogData(params.id);
+  const { data: blog } = useBlogs(params.id);
   const [isEditing, setIsEditing] = useState(false);
   const { isVisible, showModal, hideModal } = useModal();
   const router = useRouter();
