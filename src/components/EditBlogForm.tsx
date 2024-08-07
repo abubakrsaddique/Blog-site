@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import useEditBlog from "@/src/app/hook/useEditBlog";
-import { Blog } from "@/src/app/hook/useBlogData";
+import useEditBlog from "@/src/hook/useEditBlog";
+import { Blog } from "@/src/hook/useBlogData";
 
 interface EditBlogFormProps {
   blog: Blog;

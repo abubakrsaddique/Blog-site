@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { db } from "@/Firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { Blog } from "@/src/app/hook/useBlogData";
+import { Blog } from "@/src/hook/useBlogData";
 
 interface UseEditBlogProps {
   setIsEditing: (isEditing: boolean) => void;

@@ -1,5 +1,4 @@
-import Image from "next/image";
-import MyProfile from "./components/MyProfile";
+import MyProfile from "@/src/components/MyProfile";
 
 export default function Home() {
   return (

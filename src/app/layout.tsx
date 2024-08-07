@@ -3,10 +3,10 @@ import { Toaster } from "sonner";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "@/src/components/Navbar";
+import Footer from "@/src/components/Footer";
 
-import TanstackProvider from "./provider/TanStackProvider";
+import TanstackProvider from "@/src/provider/TanStackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

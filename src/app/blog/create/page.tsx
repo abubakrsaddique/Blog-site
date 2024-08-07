@@ -1,6 +1,6 @@
 "use client";
 
-import { useCreateBlog } from "@/src/app/hook/useCreateBlog";
+import { useCreateBlog } from "@/src/hook/useCreateBlog";
 
 const CreateBlogPage = () => {
   const {

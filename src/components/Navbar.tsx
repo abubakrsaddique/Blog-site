@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import useActiveLink from "@/src/app/hook/useActiveLink";
+import useActiveLink from "@/src/hook/useActiveLink";
 
 const Navbar: React.FC = () => {
   return (

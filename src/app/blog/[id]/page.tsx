@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBlogs } from "@/src/app/hook/useBlogData";
-import { Blog } from "@/src/app/hook/useBlogData";
-import { EditBlogForm } from "@/src/app/components/EditBlogForm";
-import DeleteBlog from "@/src/app/components/DeleteBlog";
-import { useModal } from "@/src/app/modal/useModal";
-import useDeleteBlog from "@/src/app/hook/useDeleteBlog";
+import { useBlogs } from "@/src/hook/useBlogData";
+import { Blog } from "@/src/hook/useBlogData";
+import { EditBlogForm } from "@/src/components/EditBlogForm";
+import DeleteBlog from "@/src/components/DeleteBlog";
+import { useModal } from "@/src/modal/useModal";
+import useDeleteBlog from "@/src/hook/useDeleteBlog";
 
 const BlogDetailPage = ({ params }: { params: { id: string } }) => {
   const { data: blog } = useBlogs(params.id);

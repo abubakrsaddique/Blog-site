@@ -4,7 +4,7 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query";
 import { collection, onSnapshot, doc, DocumentData } from "firebase/firestore";
-import { db } from "../../../Firebase";
+import { db } from "../../Firebase";
 
 export interface Blog {
   id: string;
