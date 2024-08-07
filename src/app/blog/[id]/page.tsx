@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBlogs } from "@/src/hook/useBlogData";
-import { Blog } from "@/src/hook/useBlogData";
+import { BlogProps } from "@/src/hook/useBlogData";
 import { EditBlogForm } from "@/src/components/EditBlogForm";
 import DeleteBlog from "@/src/components/DeleteBlog";
 import { useModal } from "@/src/modal/useModal";
@@ -59,16 +59,16 @@ const BlogDetailPage = ({ params }: { params: { id: string } }) => {
         </button>
       </div>
       {isEditing ? (
-        <EditBlogForm blog={blog as Blog} setIsEditing={setIsEditing} />
+        <EditBlogForm blog={blog as BlogProps} setIsEditing={setIsEditing} />
       ) : (
         <div className="p-4">
           <h1 className="text-xl font-bold mb-2 text-white">
-            {(blog as Blog).title}
+            {(blog as BlogProps).title}
           </h1>
           <h2 className="text-base font-semibold mb-4 text-white">
-            {(blog as Blog).subtitle}
+            {(blog as BlogProps).subtitle}
           </h2>
-          <p className="text-white">{(blog as Blog).content}</p>
+          <p className="text-white">{(blog as BlogProps).content}</p>
         </div>
       )}
       {isVisible && (

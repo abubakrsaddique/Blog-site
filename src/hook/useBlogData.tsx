@@ -6,20 +6,22 @@ import {
 import { collection, onSnapshot, doc, DocumentData } from "firebase/firestore";
 import { db } from "../../Firebase";
 
-export interface Blog {
+export interface BlogProps {
   id: string;
   title: string;
   subtitle: string;
   content: string;
 }
 
-export const useBlogs = (id?: string): UseQueryResult<Blog[] | Blog, Error> => {
+export const useBlogs = (
+  id?: string
+): UseQueryResult<BlogProps[] | BlogProps, Error> => {
   const queryClient = useQueryClient();
 
-  return useQuery<Blog[] | Blog, Error>({
+  return useQuery<BlogProps[] | BlogProps, Error>({
     queryKey: id ? ["blog", id] : ["blogs"],
     queryFn: () =>
-      new Promise<Blog[] | Blog>((resolve, reject) => {
+      new Promise<BlogProps[] | BlogProps>((resolve, reject) => {
         const collectionRef = collection(db, "blogs");
 
         // Use for Fetch Blog Details
@@ -32,7 +34,7 @@ export const useBlogs = (id?: string): UseQueryResult<Blog[] | Blog, Error> => {
                 const blog = {
                   id: docSnapshot.id,
                   ...docSnapshot.data(),
-                } as Blog;
+                } as BlogProps;
                 resolve(blog);
                 queryClient.setQueryData(["blog", id], blog);
               } else {
@@ -51,7 +53,7 @@ export const useBlogs = (id?: string): UseQueryResult<Blog[] | Blog, Error> => {
               const blogs = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
-              })) as Blog[];
+              })) as BlogProps[];
               resolve(blogs);
               queryClient.setQueryData(["blogs"], blogs);
             },

@@ -3,11 +3,10 @@
 import Link from "next/link";
 
 import { useBlogs } from "@/src/hook/useBlogData";
-import { Blog } from "@/src/hook/useBlogData";
+import { BlogProps } from "@/src/hook/useBlogData";
 
 const BlogPage = () => {
   const { data: blogs, isLoading, isError } = useBlogs();
-
   if (isLoading) {
     return (
       <div className="p-4 text-white flex justify-center items-center">
@@ -32,7 +31,7 @@ const BlogPage = () => {
         </button>
       </Link>
       <div className="flex flex-row flex-wrap gap-6 w-full">
-        {(blogs as Blog[]).map((blog) => (
+        {(blogs as BlogProps[]).map((blog) => (
           <Link key={blog.id} href={`/blog/${blog.id}`} className="py-3">
             <div className="p-4 border text-white rounded shadow hover:bg-gray-100 hover:text-black">
               <h2 className="text-xl font-bold">{blog.title}</h2>

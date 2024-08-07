@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { db } from "@/Firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { Blog } from "@/src/hook/useBlogData";
+import { BlogProps } from "@/src/hook/useBlogData";
 
 interface UseEditBlogProps {
   setIsEditing: (isEditing: boolean) => void;
@@ -12,8 +12,8 @@ interface UseEditBlogProps {
 const useEditBlog = ({ setIsEditing }: UseEditBlogProps) => {
   const router = useRouter();
 
-  const mutation = useMutation<void, Error, Blog>({
-    mutationFn: async (updatedBlog: Blog) => {
+  const mutation = useMutation<void, Error, BlogProps>({
+    mutationFn: async (updatedBlog: BlogProps) => {
       const blogRef = doc(db, "blogs", updatedBlog.id!);
       await updateDoc(blogRef, {
         title: updatedBlog.title,

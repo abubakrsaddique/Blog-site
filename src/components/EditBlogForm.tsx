@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import useEditBlog from "@/src/hook/useEditBlog";
-import { Blog } from "@/src/hook/useBlogData";
+import { BlogProps } from "@/src/hook/useBlogData";
 
 interface EditBlogFormProps {
-  blog: Blog;
+  blog: BlogProps;
   setIsEditing: (isEditing: boolean) => void;
 }
 
