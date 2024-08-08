@@ -13,6 +13,7 @@ The repo provide a complete detail about this project. I have created this proje
 - Setting up a Firebase
 - Using Tanstack-Query
 - Updating , Deleting and Fetching Data
+- Site Map Routing
 
 ## Installation
 
