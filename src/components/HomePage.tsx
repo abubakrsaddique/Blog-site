@@ -9,6 +9,14 @@ const MyProfile = () => {
         src={ProfileImage}
         alt={""}
       />
+      <div>
+        <p className="mt-12 mb-12 text-3xl text-center text-white">
+          Hello and Welcome 👋&nbsp;
+          <span className="whitespace-nowrap">
+            I&apos;m <span className="font-bold">ABUBAKAR</span>
+          </span>
+        </p>
+      </div>
     </section>
   );
 };
